@@ -1,0 +1,83 @@
+{
+  "name": "agent-topology-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Design Pi SubagentWorkflow scripts as state machines in a local web editor and CLI.",
+  "keywords": [
+    "pi",
+    "subagents",
+    "workflow",
+    "state-machine",
+    "editor",
+    "pi-package"
+  ],
+  "license": "MIT",
+  "author": "Iury Souza",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "bin": {
+    "agent-topology-studio": "dist/bin/studio.js"
+  },
+  "pi": {
+    "extensions": [
+      "./dist/pi/extension.js"
+    ]
+  },
+  "exports": {
+    "./machine": "./dist/shared/machine.js",
+    "./ops": "./dist/shared/ops.js",
+    "./refs": "./dist/shared/refs.js",
+    "./replay": "./dist/shared/replay.js",
+    "./runner": "./dist/shared/runner.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/shared/**/*.d.ts",
+    "!dist/bin/dev.js",
+    "!dist/bin/check-workflow.js",
+    "!dist/bin/supervise.js",
+    "web/dist/",
+    "reference/"
+  ],
+  "scripts": {
+    "start": "node bin/studio.ts",
+    "dev": "node bin/dev.ts",
+    "build:ts": "rm -rf dist && tsc -p tsconfig.build.json",
+    "test": "npm run build:ts && npm run test:node && npm run test:web",
+    "test:node": "node --test 'test/**/*.test.js'",
+    "test:web": "vitest run --root web",
+    "check:copies": "node scripts/check-runner-copies.js",
+    "check:docs": "node scripts/check-docs.js",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run check:copies && npm run build:web && npm run check:pack",
+    "check-workflow": "node bin/check-workflow.ts",
+    "build:web": "vite build web",
+    "lint": "oxlint -c oxlint.config.ts server shared web bin scripts test pi",
+    "typecheck": "tsc --noEmit -p tsconfig.json; a=$?; tsc --noEmit -p web/tsconfig.json; b=$?; tsc --noEmit -p tsconfig.build.json; c=$?; exit $((a || b || c))",
+    "check": "npm run lint && npm run typecheck && npm test",
+    "prepack": "npm run build:ts && npm run build:web",
+    "check:pack": "node scripts/check-pack.js"
+  },
+  "dependencies": {
+    "acorn": "^8.18.0",
+    "effect": "4.0.6"
+  },
+  "devDependencies": {
+    "@dagrejs/dagre": "^3.1.1",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@oxlint/plugins": "1.83.0",
+    "@types/node": "26.6.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "^6.1.0",
+    "happy-dom": "21.0.4",
+    "oxlint": "1.83.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "^5.9.0",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.0"
+  }
+}

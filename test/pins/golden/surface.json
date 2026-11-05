@@ -1,0 +1,602 @@
+{
+  "A:bin/build-stamp": [
+    {
+      "name": "isSourceCheckout",
+      "type": "function"
+    },
+    {
+      "name": "needsBuild",
+      "type": "function"
+    },
+    {
+      "name": "writeStamp",
+      "type": "function"
+    }
+  ],
+  "A:bin/cli": [
+    {
+      "name": "main",
+      "type": "function"
+    }
+  ],
+  "A:bin/instances": [
+    {
+      "name": "allProjects",
+      "type": "string"
+    },
+    {
+      "name": "allProjectsUrl",
+      "type": "function"
+    },
+    {
+      "name": "defaultTimeoutMs",
+      "type": "function"
+    },
+    {
+      "name": "findInstance",
+      "type": "function"
+    },
+    {
+      "name": "instanceKey",
+      "type": "function"
+    },
+    {
+      "name": "instanceMain",
+      "type": "function"
+    },
+    {
+      "name": "listInstances",
+      "type": "function"
+    },
+    {
+      "name": "openUrl",
+      "type": "function"
+    },
+    {
+      "name": "startInstance",
+      "type": "function"
+    },
+    {
+      "name": "stateDir",
+      "type": "function"
+    },
+    {
+      "name": "stopInstance",
+      "type": "function"
+    }
+  ],
+  "A:bin/supervise": [
+    {
+      "name": "supervise",
+      "type": "function"
+    }
+  ],
+  "A:pi/extension": [
+    {
+      "name": "default",
+      "type": "function"
+    }
+  ],
+  "A:pi/studio": [
+    {
+      "name": "createStudioExtension",
+      "type": "function"
+    },
+    {
+      "name": "defaultSettingsPath",
+      "type": "function"
+    },
+    {
+      "name": "parseStudioArgs",
+      "type": "function"
+    },
+    {
+      "name": "readProjects",
+      "type": "function"
+    }
+  ],
+  "A:server/args": [
+    {
+      "name": "parseServerArgs",
+      "type": "function"
+    }
+  ],
+  "A:server/catalog": [
+    {
+      "name": "readCatalog",
+      "type": "function"
+    }
+  ],
+  "A:server/check": [
+    {
+      "name": "checkWorkflowCode",
+      "type": "function"
+    },
+    {
+      "name": "extractMeta",
+      "type": "function"
+    },
+    {
+      "name": "hashText",
+      "type": "function"
+    },
+    {
+      "name": "isSafeName",
+      "type": "function"
+    }
+  ],
+  "A:server/edge": [
+    {
+      "name": "runEdge",
+      "type": "function"
+    }
+  ],
+  "A:server/errors": [
+    {
+      "name": "FsError",
+      "type": "function",
+      "className": "FsError"
+    },
+    {
+      "name": "Problems",
+      "type": "function",
+      "className": "Problems"
+    },
+    {
+      "name": "ProjectPathError",
+      "type": "function",
+      "className": "ProjectPathError"
+    },
+    {
+      "name": "RequestError",
+      "type": "function",
+      "className": "RequestError"
+    },
+    {
+      "name": "RoleError",
+      "type": "function",
+      "className": "RoleError"
+    },
+    {
+      "name": "RunIdError",
+      "type": "function",
+      "className": "RunIdError"
+    },
+    {
+      "name": "StaleError",
+      "type": "function",
+      "className": "StaleError"
+    }
+  ],
+  "A:server/git": [
+    {
+      "name": "readBranch",
+      "type": "function"
+    }
+  ],
+  "A:server/http": [
+    {
+      "name": "createServer",
+      "type": "function"
+    }
+  ],
+  "A:server/http-errors": [
+    {
+      "name": "errorResponse",
+      "type": "function"
+    }
+  ],
+  "A:server/main": [
+    {
+      "name": "main",
+      "type": "function"
+    }
+  ],
+  "A:server/project": [
+    {
+      "name": "ProjectPathError",
+      "type": "function",
+      "className": "ProjectPathError"
+    },
+    {
+      "name": "StaleError",
+      "type": "function",
+      "className": "StaleError"
+    },
+    {
+      "name": "openProject",
+      "type": "function"
+    }
+  ],
+  "A:server/project-fs": [
+    {
+      "name": "atomicWrite",
+      "type": "function"
+    },
+    {
+      "name": "attempt",
+      "type": "function"
+    },
+    {
+      "name": "guarded",
+      "type": "function"
+    },
+    {
+      "name": "isMissing",
+      "type": "function"
+    },
+    {
+      "name": "list",
+      "type": "function"
+    },
+    {
+      "name": "optionalRead",
+      "type": "function"
+    },
+    {
+      "name": "readText",
+      "type": "function"
+    },
+    {
+      "name": "removeFile",
+      "type": "function"
+    }
+  ],
+  "A:server/registry": [
+    {
+      "name": "checkRoot",
+      "type": "function"
+    },
+    {
+      "name": "createRegistry",
+      "type": "function"
+    },
+    {
+      "name": "discoverProjects",
+      "type": "function"
+    },
+    {
+      "name": "isProjectId",
+      "type": "function"
+    },
+    {
+      "name": "projectId",
+      "type": "function"
+    }
+  ],
+  "A:server/roles": [
+    {
+      "name": "RoleError",
+      "type": "function",
+      "className": "RoleError"
+    },
+    {
+      "name": "isRoleName",
+      "type": "function"
+    },
+    {
+      "name": "roleCode",
+      "type": "function"
+    },
+    {
+      "name": "roleListFields",
+      "type": "object"
+    },
+    {
+      "name": "roleRecord",
+      "type": "function"
+    }
+  ],
+  "A:server/runs": [
+    {
+      "name": "RunIdError",
+      "type": "function",
+      "className": "RunIdError"
+    },
+    {
+      "name": "projectRuns",
+      "type": "function"
+    },
+    {
+      "name": "runsProgram",
+      "type": "function"
+    }
+  ],
+  "A:server/services": [
+    {
+      "name": "ProjectFs",
+      "type": "object"
+    }
+  ],
+  "A:server/session-paths": [
+    {
+      "name": "sessionRunsRoot",
+      "type": "function"
+    }
+  ],
+  "A:shared/literal": [
+    {
+      "name": "literal",
+      "type": "function"
+    }
+  ],
+  "A:shared/machine": [
+    {
+      "name": "compile",
+      "type": "function"
+    },
+    {
+      "name": "extract",
+      "type": "function"
+    },
+    {
+      "name": "templateMachine",
+      "type": "function"
+    },
+    {
+      "name": "validateMachine",
+      "type": "function"
+    }
+  ],
+  "A:shared/ops": [
+    {
+      "name": "addAfter",
+      "type": "function"
+    },
+    {
+      "name": "addState",
+      "type": "function"
+    },
+    {
+      "name": "clean",
+      "type": "function"
+    },
+    {
+      "name": "connect",
+      "type": "function"
+    },
+    {
+      "name": "eventNameFor",
+      "type": "function"
+    },
+    {
+      "name": "removeEvent",
+      "type": "function"
+    },
+    {
+      "name": "removeInput",
+      "type": "function"
+    },
+    {
+      "name": "removeOutput",
+      "type": "function"
+    },
+    {
+      "name": "removeState",
+      "type": "function"
+    },
+    {
+      "name": "renameState",
+      "type": "function"
+    },
+    {
+      "name": "retitle",
+      "type": "function"
+    },
+    {
+      "name": "setEvent",
+      "type": "function"
+    },
+    {
+      "name": "setField",
+      "type": "function"
+    },
+    {
+      "name": "setInput",
+      "type": "function"
+    },
+    {
+      "name": "setKind",
+      "type": "function"
+    },
+    {
+      "name": "setOutput",
+      "type": "function"
+    },
+    {
+      "name": "slug",
+      "type": "function"
+    }
+  ],
+  "A:shared/refs": [
+    {
+      "name": "FIELD_NAME",
+      "type": "object"
+    },
+    {
+      "name": "PLACEHOLDER",
+      "type": "object"
+    },
+    {
+      "name": "references",
+      "type": "function"
+    },
+    {
+      "name": "unknownRefs",
+      "type": "function"
+    }
+  ],
+  "A:shared/replay": [
+    {
+      "name": "readJournal",
+      "type": "function"
+    },
+    {
+      "name": "replay",
+      "type": "function"
+    },
+    {
+      "name": "replayMatch",
+      "type": "function"
+    }
+  ],
+  "A:shared/runner": [
+    {
+      "name": "runner",
+      "type": "string"
+    }
+  ],
+  "A:shared/session-paths": [
+    {
+      "name": "encodeCwd",
+      "type": "function"
+    }
+  ],
+  "B:runner": {
+    "sha256": "e187f6b40ec252fc8f2ea1a42f5a7f4cf826c4d5f089095edba138ea3c64c6cb",
+    "length": 4902
+  },
+  "C:FsError": {
+    "message": "",
+    "tag": "FsError",
+    "isError": true,
+    "json": "{\"op\":\"read\",\"path\":\"/x/y\",\"cause\":{},\"_tag\":\"FsError\"}",
+    "keys": [
+      "op",
+      "path",
+      "_tag"
+    ]
+  },
+  "C:Problems": {
+    "message": "first\nsecond",
+    "tag": "Problems",
+    "isError": true,
+    "json": "{\"problems\":[\"first\",\"second\"],\"warnings\":[\"careful\"],\"_tag\":\"Problems\"}",
+    "keys": [
+      "problems",
+      "warnings",
+      "_tag"
+    ]
+  },
+  "C:ProjectPathError": {
+    "message": "Workflow and role paths must stay inside the project",
+    "tag": "ProjectPathError",
+    "isError": true,
+    "json": "{\"_tag\":\"ProjectPathError\"}",
+    "keys": [
+      "_tag"
+    ]
+  },
+  "C:RequestError": {
+    "message": "Bad request",
+    "tag": "RequestError",
+    "isError": true,
+    "json": "{\"status\":400,\"message\":\"Bad request\",\"_tag\":\"RequestError\"}",
+    "keys": [
+      "status",
+      "_tag"
+    ]
+  },
+  "C:RoleError": {
+    "message": "Role not found: x",
+    "tag": "RoleError",
+    "isError": true,
+    "json": "{\"message\":\"Role not found: x\",\"_tag\":\"RoleError\"}",
+    "keys": [
+      "_tag"
+    ]
+  },
+  "C:RunIdError": {
+    "message": "Invalid run id",
+    "tag": "RunIdError",
+    "isError": true,
+    "json": "{\"message\":\"Invalid run id\",\"_tag\":\"RunIdError\"}",
+    "keys": [
+      "_tag"
+    ]
+  },
+  "C:StaleError": {
+    "message": "The file changed on disk since it was loaded. Reload before saving.",
+    "tag": "StaleError",
+    "isError": true,
+    "json": "{\"baseSha256\":\"aaa\",\"currentSha256\":null,\"_tag\":\"StaleError\"}",
+    "keys": [
+      "baseSha256",
+      "currentSha256",
+      "_tag"
+    ]
+  },
+  "D:extension": {
+    "defaultType": "function",
+    "commands": [
+      {
+        "name": "studio",
+        "handler": "function",
+        "description": "Open Topology studio for this project (/studio open | stop | pick | all | <path>)"
+      }
+    ],
+    "events": [
+      {
+        "via": "events.on",
+        "event": "command-menu:collect:v1"
+      }
+    ]
+  },
+  "E:package": {
+    "exports": [
+      "./machine",
+      "./ops",
+      "./package.json",
+      "./refs",
+      "./replay",
+      "./runner"
+    ],
+    "names": {
+      "./machine": [
+        "compile",
+        "extract",
+        "templateMachine",
+        "validateMachine"
+      ],
+      "./ops": [
+        "addAfter",
+        "addState",
+        "clean",
+        "connect",
+        "eventNameFor",
+        "removeEvent",
+        "removeInput",
+        "removeOutput",
+        "removeState",
+        "renameState",
+        "retitle",
+        "setEvent",
+        "setField",
+        "setInput",
+        "setKind",
+        "setOutput",
+        "slug"
+      ],
+      "./package.json": [
+        "default"
+      ],
+      "./refs": [
+        "FIELD_NAME",
+        "PLACEHOLDER",
+        "references",
+        "unknownRefs"
+      ],
+      "./replay": [
+        "readJournal",
+        "replay",
+        "replayMatch"
+      ],
+      "./runner": [
+        "runner"
+      ]
+    },
+    "bin": [
+      "agent-topology-studio"
+    ]
+  }
+}

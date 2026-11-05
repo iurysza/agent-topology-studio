@@ -1,0 +1,53 @@
+{
+  "id": "plan",
+  "name": "Plan and challenge a task",
+  "description": "Lead writes the Markdown plan, oracle challenges it until approved, scribe writes the HTML explainer",
+  "whenToUse": "Before building anything non-trivial. Stops for Iury to approve the plan.",
+  "inputs": {
+    "task": { "type": "string", "required": true, "description": "The task to plan" },
+    "slug": { "type": "string", "required": true, "description": "Directory name under ai-artifacts/workflows" },
+    "dir": { "type": "string", "default": ".", "description": "Project directory" }
+  },
+  "initial": "draft",
+  "states": {
+    "draft": {
+      "kind": "task",
+      "title": "Plan",
+      "role": "lead",
+      "prompt": "Project directory: {{inputs.dir}}\nWrite your Markdown plan files in: ai-artifacts/workflows/{{inputs.slug}}/\n\nTask:\n{{inputs.task}}",
+      "output": { "summary": { "type": "string", "required": true, "description": "Summary of the Markdown plan files" } },
+      "on": { "drafted": { "to": "challenge", "description": "The plan files are ready for challenge" } },
+      "maxVisits": 1
+    },
+    "challenge": {
+      "kind": "decision",
+      "title": "Challenge",
+      "role": "oracle",
+      "prompt": "Project directory: {{inputs.dir}}\nTask:\n{{inputs.task}}\n\nThe lead's plan is in ai-artifacts/workflows/{{inputs.slug}}/. Lead's initial summary:\n{{results.draft.summary}}\n\nLatest revision, if present:\n{{results.revise.summary}}\n\nRead the plan files and the relevant code. Look for drift from the task, hidden assumptions, missing tests and risky steps. Approve only if it is ready to build. This is challenge round {{visit}}.",
+      "output": { "feedback": { "type": "string", "required": true, "description": "What must change, or why it is approved" } },
+      "on": {
+        "approved": { "to": "explain", "description": "The plan is ready to build" },
+        "changes": { "to": "revise", "description": "The lead must address the oracle feedback" }
+      },
+      "maxVisits": 3
+    },
+    "revise": {
+      "kind": "task",
+      "title": "Revise plan",
+      "role": "lead",
+      "prompt": "Project directory: {{inputs.dir}}\nYour plan files are in ai-artifacts/workflows/{{inputs.slug}}/. Revise them in place using this oracle feedback:\n{{results.challenge.feedback}}",
+      "output": { "summary": { "type": "string", "required": true, "description": "Summary of the revised plan" } },
+      "on": { "revised": { "to": "challenge" } },
+      "maxVisits": 3
+    },
+    "explain": {
+      "kind": "task",
+      "title": "Explain",
+      "role": "scribe",
+      "prompt": "Read the plan files in ai-artifacts/workflows/{{inputs.slug}}/ and the code they reference in {{inputs.dir}}. Write ai-artifacts/workflows/{{inputs.slug}}/plan.html: a visual explainer for Iury to review and approve before anything is built.\n\nOracle status, show it prominently at the top: Approved by the oracle. {{results.challenge.feedback}}\n\nTask:\n{{inputs.task}}",
+      "on": { "done": { "to": "approved" } },
+      "maxVisits": 1
+    },
+    "approved": { "kind": "final", "title": "Approved", "outcome": "success" }
+  }
+}

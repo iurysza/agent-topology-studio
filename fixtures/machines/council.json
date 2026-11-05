@@ -1,0 +1,143 @@
+{
+  "id": "council",
+  "name": "Council",
+  "description": "Three distinct models vote on a high-stakes question; a judge tallies, one deliberation round if split",
+  "initial": "frame",
+  "states": {
+    "frame": {
+      "kind": "task",
+      "title": "Frame",
+      "role": "lead",
+      "prompt": "Project directory: {{inputs.dir}}\nQuestion: {{inputs.question}}\nContext: {{inputs.context}}\nYou are read-only. Do not change code or any files.\nWrite a brief stating what is being decided, 3–6 concrete checks, and what evidence would settle each check.\nReturn the brief in the required brief output field, then fire framed.",
+      "on": {
+        "framed": {
+          "to": "vote"
+        }
+      },
+      "maxVisits": 1,
+      "output": {
+        "brief": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "approved": {
+      "kind": "final",
+      "title": "Approved",
+      "outcome": "success"
+    },
+    "vote": {
+      "kind": "fanout",
+      "title": "Vote",
+      "branches": [
+        {
+          "id": "skeptic",
+          "role": "skeptic",
+          "prompt": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: correctness and safety. Only you may veto, and only for a concrete safety or data-loss issue you can point to.\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote"
+        },
+        {
+          "id": "auditor",
+          "role": "auditor",
+          "prompt": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: evidence. Do the tests prove the claims, what is untested, and does the diff match its description?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote"
+        },
+        {
+          "id": "pragmatist",
+          "role": "pragmatist",
+          "prompt": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: scope, simplicity and cost of ownership. Is this the smallest change, and what would it break for users?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote"
+        }
+      ],
+      "on": {
+        "voted": {
+          "to": "tally"
+        },
+        "failed": {
+          "to": "tally"
+        }
+      }
+    },
+    "tally": {
+      "kind": "decision",
+      "title": "Tally",
+      "role": "judge",
+      "prompt": "Project directory: {{inputs.dir}}\nQuestion: {{inputs.question}}\nBrief:\n{{results.frame.brief}}\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nDeliberation ballots, if present:\nSkeptic:\n{{results.deliberate.skeptic.text}}\nAuditor:\n{{results.deliberate.auditor.text}}\nPragmatist:\n{{results.deliberate.pragmatist.text}}\nHistory:\n{{run.history}}\nThis is tally visit {{visit}}.\nOn visit 1 tally round 1. On visit 2 tally only the deliberation ballots, not stale round-1 votes. A null ballot is a missing seat; the runner renders it as an empty ballot section. Missing deliberation on visit 1 is expected. Quorum is 2 of 3 seats. Count votes, not confidence. Only the skeptic may veto, and only for a concrete safety or data-loss issue it can point to. A veto: yes from the skeptic blocks and you may not override it. Majority approve means approved; majority block or no quorum means blocked. Otherwise choose split, allowed only on visit 1. On visit 2 you must choose approved or blocked; if there is still no majority approve, choose blocked.\nYou are read-only except for the decision ledger. Before firing, write ai-artifacts/council/{{inputs.slug}}/decision.md in {{inputs.dir}}. Create its parent directories if needed. Include the question, outcome, each ballot verbatim with its seat and round, your reasoning, and conditions. Mark missing seats explicitly. Do not change code or any other files. Return decision as one paragraph explaining the outcome and why.",
+      "on": {
+        "approved": {
+          "to": "approved"
+        },
+        "blocked": {
+          "to": "blocked"
+        },
+        "split": {
+          "to": "deliberate"
+        }
+      },
+      "output": {
+        "decision": {
+          "type": "string",
+          "required": true,
+          "description": "One paragraph: outcome and why"
+        }
+      },
+      "maxVisits": 2
+    },
+    "blocked": {
+      "kind": "final",
+      "title": "Blocked",
+      "outcome": "failure"
+    },
+    "deliberate": {
+      "kind": "fanout",
+      "title": "Deliberate",
+      "branches": [
+        {
+          "id": "skeptic",
+          "role": "skeptic",
+          "prompt": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\n\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: correctness and safety. Only you may veto, and only for a concrete safety or data-loss issue you can point to.\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote"
+        },
+        {
+          "id": "auditor",
+          "role": "auditor",
+          "prompt": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\n\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: evidence. Do the tests prove the claims, what is untested, and does the diff match its description?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote"
+        },
+        {
+          "id": "pragmatist",
+          "role": "pragmatist",
+          "prompt": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\n\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: scope, simplicity and cost of ownership. Is this the smallest change, and what would it break for users?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote"
+        }
+      ],
+      "on": {
+        "voted": {
+          "to": "tally"
+        },
+        "failed": {
+          "to": "tally"
+        }
+      },
+      "maxVisits": 1
+    }
+  },
+  "whenToUse": "Before merging or deciding anything risky. Nothing in the council changes code.",
+  "inputs": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The question the council must answer"
+    },
+    "context": {
+      "type": "string",
+      "default": "the uncommitted diff and the files it touches",
+      "description": "What to look at"
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "description": "Directory name under ai-artifacts/council"
+    },
+    "dir": {
+      "type": "string",
+      "default": ".",
+      "description": "Project directory"
+    }
+  }
+}

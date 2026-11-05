@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Topology studio</title>
+<meta name="color-scheme" content="light dark">
+<!-- Theme bootstrap. Runs before React mounts so the first paint already has the right theme.
+     Contract: localStorage "theme" is "light", "dark" or absent (follow the OS). The result is
+     a .light or .dark class on <html> plus a matching color-scheme. window.__theme() re-applies it;
+     the theme switch calls it after changing the stored value. -->
+<script>
+(function () {
+  var root = document.documentElement;
+  var osDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function storedChoice() {
+    try {
+      var value = window.localStorage.getItem("theme");
+      return value === "light" || value === "dark" ? value : null;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function applyTheme() {
+    var theme = storedChoice() || (osDark.matches ? "dark" : "light");
+    root.classList.toggle("dark", theme === "dark");
+    root.classList.toggle("light", theme === "light");
+    root.style.colorScheme = theme;
+  }
+
+  window.__theme = applyTheme;
+  applyTheme();
+  osDark.addEventListener("change", applyTheme);
+  window.addEventListener("storage", function (event) {
+    if (event.key === "theme") applyTheme();
+  });
+})();
+</script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

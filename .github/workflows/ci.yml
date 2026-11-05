@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  # release.yml reuses these checks on the tagged commit before it publishes.
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.18.0
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # npm test runs build:ts first, so it is not repeated as its own step.
+      - name: Build TypeScript and test
+        run: npm test
+
+      - name: Build web
+        run: npm run build:web
+
+      - name: Check runner copies
+        run: npm run check:copies
+
+      - name: Check package contents
+        run: npm run check:pack
+
+      - name: Check docs
+        run: npm run check:docs
+        env:
+          CHECK_DOCS_USERNAME: no-local-username-in-ci

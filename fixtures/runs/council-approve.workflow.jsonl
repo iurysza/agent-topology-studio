@@ -1,0 +1,5 @@
+{"index":0,"key":"4f22451ce74f37e0aa9fe5ffdae22a92","ok":true,"text":"{\"event\":\"framed\",\"brief\":\"Check safety, tests and user impact against example.js:1.\"}"}
+{"index":1,"key":"03471fe6a35f6b08afc67adcd9fa8c1e","ok":true,"text":"verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":2,"key":"e3a46a7719e00090bfe2c6f2b0bf0122","ok":true,"text":"verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":3,"key":"8e8a26672ea7951d2436fed3be9dee08","ok":true,"text":"verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":4,"key":"f3ab22c05f445cf37bcf0b0a0267ec3f","ok":true,"text":"{\"event\":\"approved\",\"decision\":\"approved: scripted ballot tally\"}"}

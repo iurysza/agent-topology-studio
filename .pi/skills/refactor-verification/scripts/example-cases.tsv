@@ -1,0 +1,4 @@
+# name<TAB>command. $ROOT is the tree under test, $FIX a fresh fixtures/playground copy.
+list	node $ROOT/bin/studio.ts list --project $FIX
+list-json	node $ROOT/bin/studio.ts list --project $FIX --json
+show-missing	node $ROOT/bin/studio.ts show nope --project $FIX

@@ -1,0 +1,29 @@
+{
+  "G:GET /": {
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "cacheControl": "no-store",
+    "body": "<!doctype html><title>stub</title><script type=\"module\" src=\"/assets/a.js\"></script>\n"
+  },
+  "G:GET /api/project": {
+    "status": 200,
+    "contentType": "application/json",
+    "cacheControl": "no-store",
+    "body": "{\"dir\":\"<FIX>\",\"workflows\":[{\"id\":\"build\",\"name\":\"Build an approved plan\",\"description\":\"Coder builds an approved plan, two reviewers and the oracle agree fixes, a fresh coder applies them, QA proves it; reruns on QA failure\",\"editable\":true,\"states\":8},{\"id\":\"council\",\"name\":\"Council\",\"description\":\"Three distinct models vote on a high-stakes question; a judge tallies, one deliberation round if split\",\"editable\":true,\"states\":6},{\"id\":\"plan\",\"name\":\"Plan and challenge a task\",\"description\":\"Lead writes the Markdown plan, oracle challenges it until approved, scribe writes the HTML explainer\",\"editable\":true,\"states\":5}],\"roles\":[{\"name\":\"auditor\",\"description\":\"Check evidence, test coverage and whether the diff matches its description\",\"color\":\"orange\",\"model\":\"openai-codex/gpt-6-astra\",\"thinking\":\"high\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[\"coding-standards\",\"technical-writing\",\"unslop\"]},{\"name\":\"coder\",\"description\":\"Implements scoped code changes and verifies them\",\"color\":\"green\",\"model\":\"openai-codex/gpt-6.1-sol\",\"thinking\":\"high\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\",\"edit\",\"write\"],\"skills\":[\"coding-standards\"]},{\"name\":\"judge\",\"description\":\"Tally council ballots and write the decision ledger\",\"color\":\"purple\",\"model\":\"claude-code/claude-opus-5-5\",\"thinking\":\"high\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\",\"write\",\"edit\"],\"skills\":[\"coding-standards\",\"technical-writing\",\"unslop\"]},{\"name\":\"lead\",\"description\":\"Technical lead who turns a task into a concrete Markdown plan\",\"color\":\"blue\",\"model\":\"claude-code/claude-opus-5-5\",\"thinking\":\"medium\",\"tools\":[\"read\",\"write\",\"edit\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[]},{\"name\":\"oracle\",\"description\":\"High-context second opinion that checks decisions for drift and hidden assumptions\",\"color\":\"purple\",\"model\":\"claude-code/claude-opus-5-5\",\"thinking\":\"high\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[]},{\"name\":\"pragmatist\",\"description\":\"Check scope, simplicity, ownership cost and user impact\",\"color\":\"cyan\",\"model\":\"openai-codex/gpt-6.1-sol\",\"thinking\":\"high\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[\"coding-standards\",\"technical-writing\",\"unslop\"]},{\"name\":\"qa\",\"description\":\"Proves a change works by running checks and testing by hand\",\"color\":\"orange\",\"model\":\"openai-codex/gpt-6-luna\",\"thinking\":\"high\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[\"agent-browser\"]},{\"name\":\"researcher\",\"description\":\"Fast read-only researcher for code and web questions\",\"color\":\"cyan\",\"model\":\"openai-codex/gpt-6-luna\",\"thinking\":\"high\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[]},{\"name\":\"reviewer\",\"description\":\"Adversarial read-only code reviewer for diffs and changed files\",\"color\":\"red\",\"model\":\"openai-codex/gpt-6-astra\",\"thinking\":\"medium\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[\"coding-standards\",\"technical-writing\",\"unslop\"]},{\"name\":\"scribe\",\"description\":\"Turns plans and runs into creative HTML explainers, docs and run reports\",\"color\":\"yellow\",\"model\":\"claude-code/claude-sonnet-5-5\",\"thinking\":\"medium\",\"tools\":[\"read\",\"write\",\"edit\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[\"show-me\",\"technical-writing\",\"unslop\"]},{\"name\":\"skeptic\",\"description\":\"Check correctness and safety; veto only concrete safety or data-loss issues\",\"color\":\"red\",\"model\":\"claude-code/claude-opus-5-5\",\"thinking\":\"high\",\"tools\":[\"read\",\"bash\",\"grep\",\"find\",\"ls\"],\"skills\":[\"coding-standards\",\"technical-writing\",\"unslop\"]}],\"name\":\"fix\",\"branch\":null}"
+  },
+  "G:GET /assets/a.js": {
+    "status": 200,
+    "contentType": "text/javascript; charset=utf-8",
+    "cacheControl": "public, max-age=31536000, immutable",
+    "body": "console.log(\"stub\");\n"
+  },
+  "G:GET /nope.js": {
+    "status": 404,
+    "contentType": "application/json",
+    "cacheControl": "no-store",
+    "body": "{\"error\":\"Not found\"}"
+  },
+  "G:startup": {
+    "url": "/?token=pins"
+  }
+}

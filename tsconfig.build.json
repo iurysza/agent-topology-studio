@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false, "outDir": "dist", "rootDir": ".", "declaration": true, "noEmitOnError": true,
+    "allowJs": true, "checkJs": false,
+    "strict": true, "noImplicitAny": true, "strictNullChecks": true, "useUnknownInCatchVariables": true
+  },
+  "include": ["server", "shared", "bin", "pi"],
+  "exclude": ["node_modules", "dist", "bin/studio.js"]
+}

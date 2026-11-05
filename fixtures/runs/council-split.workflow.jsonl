@@ -1,0 +1,9 @@
+{"index":0,"key":"4f22451ce74f37e0aa9fe5ffdae22a92","ok":true,"text":"{\"event\":\"framed\",\"brief\":\"Check safety, tests and user impact against example.js:1.\"}"}
+{"index":1,"key":"03471fe6a35f6b08afc67adcd9fa8c1e","ok":true,"text":"verdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":2,"key":"e3a46a7719e00090bfe2c6f2b0bf0122","ok":true,"text":"verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":3,"key":"8e8a26672ea7951d2436fed3be9dee08","ok":true,"text":"verdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":4,"key":"1dcdcf60d7b5aa3bf8aa98aee214eb19","ok":true,"text":"{\"event\":\"split\",\"decision\":\"split: scripted ballot tally\"}"}
+{"index":5,"key":"afb6e9f322ab1c0d86d9d0111d6dc7e7","ok":true,"text":"verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":6,"key":"ef0ce28d41bd8148520154586d89cb44","ok":true,"text":"verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":7,"key":"121fadfefc674e86d448d87f3dce6d38","ok":true,"text":"verdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"}
+{"index":8,"key":"c4971f2141d163fe69305031078c522b","ok":true,"text":"{\"event\":\"approved\",\"decision\":\"approved: scripted ballot tally\"}"}

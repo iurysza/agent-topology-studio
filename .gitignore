@@ -1,0 +1,14 @@
+node_modules/
+web/dist/
+dist/
+brag-output/
+/playground/
+/ai-artifacts/workflows/
+.DS_Store
+.pi/subagent-schedules/
+
+# run journals are artefacts, not source
+**/.pi/workflows/*.workflow.jsonl
+
+# local-only friction notes kept out of the public tree
+/ai-artifacts/wtf/

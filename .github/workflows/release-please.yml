@@ -1,0 +1,32 @@
+name: Release Please
+
+# Opens or updates the release pull request on each push to main. Merging that pull request makes the vX.Y.Z tag and
+# GitHub release, which starts release.yml. Off unless the repository variable RELEASE_AUTOMATION_ENABLED is 'true'
+# and this is the intended public repository. See reference/releasing.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    if: vars.RELEASE_AUTOMATION_ENABLED == 'true' && github.repository == 'iurysza/agent-topology-studio' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      # A personal access token, not GITHUB_TOKEN: a release made with GITHUB_TOKEN does not start release.yml.
+      - uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json

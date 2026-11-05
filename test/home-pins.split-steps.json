@@ -1,0 +1,118 @@
+[
+  {
+    "n": 1,
+    "prompt": "Project directory: {{inputs.dir}}\nQuestion: {{inputs.question}}\nContext: {{inputs.context}}\nYou are read-only. Do not change code or any files.\nWrite a brief stating what is being decided, 3–6 concrete checks, and what evidence would settle each check.\nReturn the brief in the required brief output field, then fire framed.",
+    "template": "Project directory: {{inputs.dir}}\nQuestion: {{inputs.question}}\nContext: {{inputs.context}}\nYou are read-only. Do not change code or any files.\nWrite a brief stating what is being decided, 3–6 concrete checks, and what evidence would settle each check.\nReturn the brief in the required brief output field, then fire framed.",
+    "text": "{\"event\":\"framed\",\"brief\":\"Check safety, tests and user impact against example.js:1.\"}",
+    "result": {
+      "event": "framed",
+      "brief": "Check safety, tests and user impact against example.js:1."
+    }
+  },
+  {
+    "n": 2,
+    "prompt": "Project directory: {{inputs.dir}}\nBrief:\nCheck safety, tests and user impact against example.js:1.\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: correctness and safety. Only you may veto, and only for a concrete safety or data-loss issue you can point to.\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "template": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: correctness and safety. Only you may veto, and only for a concrete safety or data-loss issue you can point to.\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "text": "verdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none",
+    "result": {
+      "text": "verdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+    }
+  },
+  {
+    "n": 3,
+    "prompt": "Project directory: {{inputs.dir}}\nBrief:\nCheck safety, tests and user impact against example.js:1.\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: evidence. Do the tests prove the claims, what is untested, and does the diff match its description?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "template": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: evidence. Do the tests prove the claims, what is untested, and does the diff match its description?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none",
+    "result": {
+      "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+    }
+  },
+  {
+    "n": 4,
+    "prompt": "Project directory: {{inputs.dir}}\nBrief:\nCheck safety, tests and user impact against example.js:1.\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: scope, simplicity and cost of ownership. Is this the smallest change, and what would it break for users?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "template": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\nRound 1: vote independently. You are read-only. Check the brief's items against the real code and tests; run commands if it helps. Do not change anything.\nLens: scope, simplicity and cost of ownership. Is this the smallest change, and what would it break for users?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "text": "verdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none",
+    "result": {
+      "text": "verdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+    }
+  },
+  {
+    "n": 5,
+    "prompt": "",
+    "template": "",
+    "result": {
+      "skeptic": {
+        "text": "verdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+      },
+      "auditor": {
+        "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+      },
+      "pragmatist": {
+        "text": "verdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+      }
+    }
+  },
+  {
+    "n": 6,
+    "prompt": "Project directory: {{inputs.dir}}\nQuestion: {{inputs.question}}\nBrief:\nCheck safety, tests and user impact against example.js:1.\nRound-1 ballots:\nSkeptic:\nverdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nAuditor:\nverdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nPragmatist:\nverdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nDeliberation ballots, if present:\nSkeptic:\n\nAuditor:\n\nPragmatist:\n\nHistory:\nframe → framed\nvote → voted\nThis is tally visit 1.\nOn visit 1 tally round 1. On visit 2 tally only the deliberation ballots, not stale round-1 votes. A null ballot is a missing seat; the runner renders it as an empty ballot section. Missing deliberation on visit 1 is expected. Quorum is 2 of 3 seats. Count votes, not confidence. Only the skeptic may veto, and only for a concrete safety or data-loss issue it can point to. A veto: yes from the skeptic blocks and you may not override it. Majority approve means approved; majority block or no quorum means blocked. Otherwise choose split, allowed only on visit 1. On visit 2 you must choose approved or blocked; if there is still no majority approve, choose blocked.\nYou are read-only except for the decision ledger. Before firing, write ai-artifacts/council/{{inputs.slug}}/decision.md in {{inputs.dir}}. Create its parent directories if needed. Include the question, outcome, each ballot verbatim with its seat and round, your reasoning, and conditions. Mark missing seats explicitly. Do not change code or any other files. Return decision as one paragraph explaining the outcome and why.",
+    "template": "Project directory: {{inputs.dir}}\nQuestion: {{inputs.question}}\nBrief:\n{{results.frame.brief}}\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nDeliberation ballots, if present:\nSkeptic:\n{{results.deliberate.skeptic.text}}\nAuditor:\n{{results.deliberate.auditor.text}}\nPragmatist:\n{{results.deliberate.pragmatist.text}}\nHistory:\n{{run.history}}\nThis is tally visit {{visit}}.\nOn visit 1 tally round 1. On visit 2 tally only the deliberation ballots, not stale round-1 votes. A null ballot is a missing seat; the runner renders it as an empty ballot section. Missing deliberation on visit 1 is expected. Quorum is 2 of 3 seats. Count votes, not confidence. Only the skeptic may veto, and only for a concrete safety or data-loss issue it can point to. A veto: yes from the skeptic blocks and you may not override it. Majority approve means approved; majority block or no quorum means blocked. Otherwise choose split, allowed only on visit 1. On visit 2 you must choose approved or blocked; if there is still no majority approve, choose blocked.\nYou are read-only except for the decision ledger. Before firing, write ai-artifacts/council/{{inputs.slug}}/decision.md in {{inputs.dir}}. Create its parent directories if needed. Include the question, outcome, each ballot verbatim with its seat and round, your reasoning, and conditions. Mark missing seats explicitly. Do not change code or any other files. Return decision as one paragraph explaining the outcome and why.",
+    "text": "{\"event\":\"split\",\"decision\":\"split: scripted ballot tally\"}",
+    "result": {
+      "event": "split",
+      "decision": "split: scripted ballot tally"
+    }
+  },
+  {
+    "n": 7,
+    "prompt": "Project directory: {{inputs.dir}}\nBrief:\nCheck safety, tests and user impact against example.js:1.\n\nRound-1 ballots:\nSkeptic:\nverdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nAuditor:\nverdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nPragmatist:\nverdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: correctness and safety. Only you may veto, and only for a concrete safety or data-loss issue you can point to.\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "template": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\n\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: correctness and safety. Only you may veto, and only for a concrete safety or data-loss issue you can point to.\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none",
+    "result": {
+      "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+    }
+  },
+  {
+    "n": 8,
+    "prompt": "Project directory: {{inputs.dir}}\nBrief:\nCheck safety, tests and user impact against example.js:1.\n\nRound-1 ballots:\nSkeptic:\nverdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nAuditor:\nverdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nPragmatist:\nverdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: evidence. Do the tests prove the claims, what is untested, and does the diff match its description?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "template": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\n\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: evidence. Do the tests prove the claims, what is untested, and does the diff match its description?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none",
+    "result": {
+      "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+    }
+  },
+  {
+    "n": 9,
+    "prompt": "Project directory: {{inputs.dir}}\nBrief:\nCheck safety, tests and user impact against example.js:1.\n\nRound-1 ballots:\nSkeptic:\nverdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nAuditor:\nverdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nPragmatist:\nverdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: scope, simplicity and cost of ownership. Is this the smallest change, and what would it break for users?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "template": "Project directory: {{inputs.dir}}\nBrief:\n{{results.frame.brief}}\n\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nRound 2: you have seen the other seats' ballots. Revise or hold your vote; say what changed your mind or why nothing did. Same ballot shape. You are read-only. Do not change anything. Check the brief against the real code and tests; run commands if it helps.\nLens: scope, simplicity and cost of ownership. Is this the smallest change, and what would it break for users?\nReply with a ballot exactly in this shape:\nverdict: approve|block|abstain\nconfidence: low|medium|high\nveto: yes|no (skeptic only, otherwise no)\nreasons:\n- file:line evidence\nconditions: what would change your vote",
+    "text": "verdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none",
+    "result": {
+      "text": "verdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+    }
+  },
+  {
+    "n": 10,
+    "prompt": "",
+    "template": "",
+    "result": {
+      "skeptic": {
+        "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+      },
+      "auditor": {
+        "text": "verdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+      },
+      "pragmatist": {
+        "text": "verdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none"
+      }
+    }
+  },
+  {
+    "n": 11,
+    "prompt": "Project directory: {{inputs.dir}}\nQuestion: {{inputs.question}}\nBrief:\nCheck safety, tests and user impact against example.js:1.\nRound-1 ballots:\nSkeptic:\nverdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nAuditor:\nverdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nPragmatist:\nverdict: abstain\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nDeliberation ballots, if present:\nSkeptic:\nverdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nAuditor:\nverdict: approve\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nPragmatist:\nverdict: block\nconfidence: high\nveto: no\nreasons:\n- example.js:1 verified evidence\nconditions: none\nHistory:\nframe → framed\nvote → voted\ntally → split\ndeliberate → voted\nThis is tally visit 2.\nOn visit 1 tally round 1. On visit 2 tally only the deliberation ballots, not stale round-1 votes. A null ballot is a missing seat; the runner renders it as an empty ballot section. Missing deliberation on visit 1 is expected. Quorum is 2 of 3 seats. Count votes, not confidence. Only the skeptic may veto, and only for a concrete safety or data-loss issue it can point to. A veto: yes from the skeptic blocks and you may not override it. Majority approve means approved; majority block or no quorum means blocked. Otherwise choose split, allowed only on visit 1. On visit 2 you must choose approved or blocked; if there is still no majority approve, choose blocked.\nYou are read-only except for the decision ledger. Before firing, write ai-artifacts/council/{{inputs.slug}}/decision.md in {{inputs.dir}}. Create its parent directories if needed. Include the question, outcome, each ballot verbatim with its seat and round, your reasoning, and conditions. Mark missing seats explicitly. Do not change code or any other files. Return decision as one paragraph explaining the outcome and why.",
+    "template": "Project directory: {{inputs.dir}}\nQuestion: {{inputs.question}}\nBrief:\n{{results.frame.brief}}\nRound-1 ballots:\nSkeptic:\n{{results.vote.skeptic.text}}\nAuditor:\n{{results.vote.auditor.text}}\nPragmatist:\n{{results.vote.pragmatist.text}}\nDeliberation ballots, if present:\nSkeptic:\n{{results.deliberate.skeptic.text}}\nAuditor:\n{{results.deliberate.auditor.text}}\nPragmatist:\n{{results.deliberate.pragmatist.text}}\nHistory:\n{{run.history}}\nThis is tally visit {{visit}}.\nOn visit 1 tally round 1. On visit 2 tally only the deliberation ballots, not stale round-1 votes. A null ballot is a missing seat; the runner renders it as an empty ballot section. Missing deliberation on visit 1 is expected. Quorum is 2 of 3 seats. Count votes, not confidence. Only the skeptic may veto, and only for a concrete safety or data-loss issue it can point to. A veto: yes from the skeptic blocks and you may not override it. Majority approve means approved; majority block or no quorum means blocked. Otherwise choose split, allowed only on visit 1. On visit 2 you must choose approved or blocked; if there is still no majority approve, choose blocked.\nYou are read-only except for the decision ledger. Before firing, write ai-artifacts/council/{{inputs.slug}}/decision.md in {{inputs.dir}}. Create its parent directories if needed. Include the question, outcome, each ballot verbatim with its seat and round, your reasoning, and conditions. Mark missing seats explicitly. Do not change code or any other files. Return decision as one paragraph explaining the outcome and why.",
+    "text": "{\"event\":\"approved\",\"decision\":\"approved: scripted ballot tally\"}",
+    "result": {
+      "event": "approved",
+      "decision": "approved: scripted ballot tally"
+    }
+  }
+]
