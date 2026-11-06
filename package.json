@@ -13,6 +13,12 @@
   ],
   "license": "MIT",
   "author": "Iury Souza",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iurysza/agent-topology-studio.git"
+  },
+  "homepage": "https://github.com/iurysza/agent-topology-studio#readme",
+  "bugs": "https://github.com/iurysza/agent-topology-studio/issues",
   "type": "module",
   "engines": {
     "node": ">=22.12"

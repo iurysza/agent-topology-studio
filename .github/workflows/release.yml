@@ -1,6 +1,6 @@
 name: Release
 
-# Publishes to npm when a GitHub release is published. Off unless the repository variable RELEASE_AUTOMATION_ENABLED is
+# Publishes to npm when a GitHub release is published. Off unless the repository variable NPM_PUBLISH_ENABLED is
 # 'true' and this is the intended public repository. npm trusted publishing (OIDC) signs in; there is no npm token.
 # A private repository can still publish; npm only generates provenance for public repositories.
 # scripts/check-release.js still blocks the publish while package.json is private or UNLICENSED.
@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   check:
-    if: vars.RELEASE_AUTOMATION_ENABLED == 'true' && github.repository == 'iurysza/agent-topology-studio' && !github.event.release.draft && !github.event.release.prerelease && startsWith(github.event.release.tag_name, 'v')
+    if: vars.NPM_PUBLISH_ENABLED == 'true' && github.repository == 'iurysza/agent-topology-studio' && !github.event.release.draft && !github.event.release.prerelease && startsWith(github.event.release.tag_name, 'v')
     uses: ./.github/workflows/ci.yml
 
   publish:

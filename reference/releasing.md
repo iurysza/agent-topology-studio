@@ -1,8 +1,8 @@
 # Releasing
 
-Releases are automated but switched off. Nothing has been released or published yet, and publishing stays blocked until the checklist below is done.
+release-please is on. npm publishing is off, and nothing has been published yet.
 
-The plan is approved: release-please, npm trusted publishing (OIDC) and the target repository `iurysza/agent-topology-studio`. Activation is not approved. The repository stays private for now. A private repository does not block publishing to npm. Making it public is optional and needs a new instruction.
+The repository `iurysza/agent-topology-studio` is public. Turning on npm publishing needs its own approval and the steps in the activation checklist below.
 
 ## How a release works
 
@@ -21,11 +21,12 @@ Draft releases, prereleases and tags without a leading `v` do not publish.
 
 `.release-please-manifest.json` records `0.1.0`, the current version, as already released. So the first release pull request proposes the next version from the commits after the bootstrap point, for example `0.2.0` after a `feat:`. Version 0.1.0 was never tagged or published. Nothing forces a version (`release-as`). If the first public version must be exactly 0.1.0, decide that before activation.
 
-release-please reads commits since the last release tag. With no tag yet, it reads the whole history of `main`, so a fresh history keeps the first changelog short. A fresh history needs its own approval.
+release-please reads commits since the last release tag. With no tag yet, it reads the whole history of `main`, so a fresh history keeps the first changelog short. The public history starts from one squashed commit, so the first changelog is short.
 
 ## Safety switches
 
-- Both workflows run only when the repository variable `RELEASE_AUTOMATION_ENABLED` is `true` and the repository is `iurysza/agent-topology-studio`. Unset, empty or `false` means off. CI runs as normal either way.
+- Each workflow has its own switch, a repository variable. `release-please.yml` runs only when `RELEASE_PLEASE_ENABLED` is `true`. `release.yml` publishes only when `NPM_PUBLISH_ENABLED` is `true`. Both also require the repository to be `iurysza/agent-topology-studio`. Unset, empty or `false` means off. CI runs as normal either way.
+- release-please uses `RELEASE_PLEASE_TOKEN` if it is set, and the built-in `GITHUB_TOKEN` if not. With `GITHUB_TOKEN`, the release pull request does not start CI, and the GitHub release does not start `release.yml`. Add the token before turning on npm publishing.
 - `package.json` `private: true` and a private GitHub repository are different things. The first always blocks publishing. The second only means the package ships without provenance.
 - Pull requests never receive release secrets. The release workflows do not run on `pull_request`.
 - Default permissions are `contents: read`. Only the release-please job gets `contents: write` and `pull-requests: write`. Only the publish job gets `id-token: write`.
@@ -34,19 +35,24 @@ release-please reads commits since the last release tag. With no tag yet, it rea
 
 ## Activation checklist
 
-Each step needs its own approval. None of them is done.
+Each step needs its own approval.
 
-1. Verify that `web/src/styles.css` and the theme initializer in `web/index.html` are the original replacements, and check their provenance record. Then resolve the 3 components with confirmed code overlap with machine (FSL-1.1-MIT): `web/src/parts.tsx`, `web/src/graph.tsx` and `web/src/editor.tsx`. A comparison with upstream found real implementation overlap, not only credit comments. That is not a legal determination. Resolve them before an MIT release.
-2. In a separate change, set the chosen licence in `package.json` and add a matching licence file.
-3. In a separate change, remove `"private": true` from `package.json`.
-4. Only after a separate explicit instruction, create `iurysza/agent-topology-studio` as a private repository and set `repository` in `package.json` to it. Making it public, and publishing a fresh history, each need their own later approval. Neither is needed to publish.
-5. Add the repository secret `RELEASE_PLEASE_TOKEN`: a fine-grained personal access token for that one repository with Contents read and write and Pull requests read and write. A release made with the default `GITHUB_TOKEN` would not start `release.yml`.
-6. Create a GitHub environment named `npm`. Add reviewers to it if a person should approve each publish.
-7. On npmjs.com, add a trusted publisher for `agent-topology-studio`: GitHub Actions, repository `iurysza/agent-topology-studio`, workflow `release.yml`, environment `npm`. If the package does not exist on npm yet, the first publish may need a one-off manual step. That needs separate approval, and no npm token is stored in the repository.
-8. Set the repository variable `RELEASE_AUTOMATION_ENABLED` to `true`.
+Done:
+
+- The licence is MIT, with a root `LICENSE`. The stylesheet, theme initializer and the 3 components that overlapped with machine (FSL-1.1-MIT) are rewritten.
+- The repository `iurysza/agent-topology-studio` exists, is public and is set as `repository` in `package.json`.
+- `RELEASE_PLEASE_ENABLED` is `true`.
+
+Still to do before npm publishing:
+
+1. In a separate change, remove `"private": true` from `package.json`.
+2. Add the repository secret `RELEASE_PLEASE_TOKEN`: a fine-grained personal access token for that one repository with Contents read and write and Pull requests read and write.
+3. Create a GitHub environment named `npm`. Add reviewers to it if a person should approve each publish.
+4. On npmjs.com, add a trusted publisher for `agent-topology-studio`: GitHub Actions, repository `iurysza/agent-topology-studio`, workflow `release.yml`, environment `npm`. If the package does not exist on npm yet, the first publish may need a one-off manual step. That needs separate approval, and no npm token is stored in the repository.
+5. Set the repository variable `NPM_PUBLISH_ENABLED` to `true`.
 
 The publish job pins npm 11.16.0 on Node 22.18.0. Trusted publishing needs npm 11.5.1 or later and Node 22.14 or later.
 
 ## Turning it off
 
-Set `RELEASE_AUTOMATION_ENABLED` to `false` or delete it.
+Set `RELEASE_PLEASE_ENABLED` or `NPM_PUBLISH_ENABLED` to `false`, or delete it.
